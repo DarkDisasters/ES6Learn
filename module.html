@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //export 命令
+        export var firstName = 'Michael'
+        export var year = 1996
+
+        var firstName = 'Michael';
+        var lastName = 'Jackson';
+        var year = 1958;
+        export {firstName, lastName, year}
+
+        // export命令除了输出变量，还可以输出函数或类（class）
+        export function multiply(x, y){
+            return x*y
+        }
+        // 通常情况下，export输出的变量就是本来的名字，但是可以使用as关键字重命名
+        function x1(){}
+        function x2(){}
+        export{
+            x1 as streamX1,
+            x2 as streamX2
+        }
+
+        // export命令规定的是对外的接口
+        // 报错
+        export 1;
+
+        // 报错
+        var m = 1;
+        export m;
+        // 上面两种写法都会报错，因为没有提供对外的接口。第一种写法直接输出 1，第二种写法通过变量m，还是直接输出 1。1只是一个值，不是接口。正确的写法是下面这样
+
+        // 写法一
+        export var m = 1;
+
+        // 写法二
+        var m = 1;
+        export {m};
+
+        // 写法三
+        var n = 1;
+        export {n as m};
+        // 上面三种写法都是正确的，规定了对外的接口m。其他脚本可以通过这个接口，取到值1。它们的实质是，在接口名与模块内部变量之间，建立了一一对应的关系
+
+        // 报错
+        function f() {}
+        export f;
+
+        // 正确
+        export function f() {};
+
+        // 正确
+        function f() {}
+        export {f};
+
+        // export语句输出的接口，与其对应的值是动态绑定关系，即通过该接口，可以取到模块内部实时的值
+        export var foo = 'bar'
+        setTimeout(() => foo = 'baz', 500)
+
+        // 最后，export命令可以出现在模块的任何位置，只要处于模块顶层就可以。如果处于块级作用域内，就会报错，下一节的import命令也是如此。
+        // 这是因为处于条件代码块之中，就没法做静态优化了，违背了 ES6 模块的设计初衷。
+    </script>
+</body>
+</html>
