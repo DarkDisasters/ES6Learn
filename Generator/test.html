@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // generator和函数不同的是，generator由function*定义（注意多出的*号），并且，除了return语句，还可以用yield返回多次。
+        function *fib(max){
+            var t,
+                a = 0,
+                b = 1,
+                n = 0;
+            while(n < max){
+                yield a;
+                [a,b] = [b, a+b]
+                n ++;
+            }
+            return 
+        }
+        fib(5); // fib {[[GeneratorStatus]]: "suspended", [[GeneratorReceiver]]: Window}
+        // 调用generator对象有两个方法，一是不断地调用generator对象的next()方法：
+        var f = fib(5);
+        f.next(); // {value: 0, done: false}
+        f.next(); // {value: 1, done: false}
+        f.next(); // {value: 1, done: false}
+        f.next(); // {value: 2, done: false}
+        f.next(); // {value: 3, done: false}
+        f.next(); // {value: undefined, done: true}
+
+        // 第二个方法是直接用for ... of循环迭代generator对象，这种方式不需要我们自己判断done：
+        for(var x of fib(10)){
+            console.log(x); // 依次输出0, 1, 1, 2, 3, ...
+        }
+
+        // 因为generator可以在执行过程中多次返回，所以它看上去就像一个可以记住执行状态的函数，利用这一点，写一个generator就可以实现需要用面向对象才能实现的功能。
+        // 例如，用一个对象来保存状态，得这么写
+        var fib = {
+            a: 0,
+            b: 1,
+            n: 0,
+            max: 5,
+            next: function(){
+                var r = this.a,
+                    t = this.a + this.b;
+                this.a = this.b;
+                this.b = t;
+                if(this.n < this.max){
+                    this.n ++
+                    return r
+                }
+                else{
+                    return undefined
+                }
+            }
+        }
+
+        // 要生成一个自增的ID，可以编写一个next_id()函数：
+        function* next_id(){
+            count = 1
+            while(true){
+                yield count++
+            }
+        }
+        var
+    x,
+    pass = true,
+    g = next_id();
+    for (x = 1; x < 100; x ++) {
+        if (g.next().value !== x) {
+            pass = false;
+            console.log('测试失败!');
+            break;
+        }
+    }
+    if (pass) {
+        console.log('测试通过!');
+    }
+    </script>
+</body>
+</html>
