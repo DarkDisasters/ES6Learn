@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    class SuperClass{
+        constructor(name,books){
+            this.name = name;
+            this.books = books;
+        }
+
+        getName(){
+            console.log(this.name)
+        }
+    }
+
+    class SubClass extends SuperClass{
+        constructor(name, books, time){
+            super(name, books)
+            this.time = time
+        }
+
+        getTime(){
+            console.log(this.time)
+        }
+    }
+
+    var instance1 = new SubClass('js book', ['css','html'], 2018)
+    instance1.books.push('javascript')
+    instance1.getName()
+    instance1.getTime()
+    console.log('books', instance1.books)
+
+    var instance1 = new SubClass('css book', ['css','html'], 2010)
+    instance1.getName()
+    instance1.getTime()
+    console.log('books', instance1.books)
+    </script>
+    
+</body>
+</html>

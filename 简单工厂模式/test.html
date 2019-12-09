@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Alert{
+            constructor(text){
+                this.text = text
+            }
+            show(){
+                console.log('super text', this.text)
+            }
+        }
+
+        class PopAlert extends Alert{
+            constructor(type, text){
+                super(text)
+                this.type = type
+            }
+            alert(){
+                super.show()
+                if(this.type == 'alert'){
+                    console.log('just alert')
+                }
+                if(this.type == 'confirm'){
+                    console.log('显示确认框')
+                }
+                if(this.type == 'prompt'){
+                    console.log('show 提示框架')
+                }
+            }
+        }
+
+        var userNameAlert = new PopAlert('confirm', '用户账号密码验证成功')
+        userNameAlert.alert()
+    </script>
+</body>
+</html>
